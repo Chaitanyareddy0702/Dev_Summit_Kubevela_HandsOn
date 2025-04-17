@@ -1,0 +1,23 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: my-vela-app
+spec:
+  components:
+    - name: my-web-component
+      type: webservice  # Built-in component type
+      properties:
+        image: nginx:latest
+        ports: 
+          - port: 80
+            expose: true
+      traits:
+        - type: gateway  # Built-in trait
+          properties:
+            domain: my-app.local
+            http:
+              "/": 80
+        - type: env      # Built-in trait for env vars (no ConfigMap needed!)
+          properties:
+            env:
+              ENV_VAR: "production"  # Directly inject env vars
