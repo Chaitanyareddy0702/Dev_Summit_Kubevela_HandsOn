@@ -4,20 +4,13 @@ metadata:
   name: my-vela-app
 spec:
   components:
-    - name: my-web-component
-      type: webservice  # Built-in component type
+    - name: osrm-frontend
+      type: webservice
       properties:
         image: osrm/osrm-frontend
-        ports: 
-          - port: 9966
-            expose: true
-      traits:
-        - type: gateway  # Built-in trait
-          properties:
-            domain: my-app.local
-            http:
-              "/": 9966
-        - type: env      # Built-in trait for env vars (no ConfigMap needed!)
-          properties:
-            env:
-              ENV_VAR: "production"  # Directly inject env vars
+        # Open container port 9966, expose it via NodePort 31111
+        ports:
+          - port: 9966       # containerPort
+            expose: true     # turn on Service creation
+            nodePort: 32222  # request this specific NodePort
+        exposeType: NodePort # Service type
