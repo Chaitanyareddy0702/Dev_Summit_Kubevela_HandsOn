@@ -14,3 +14,8 @@ spec:
             expose: true     # turn on Service creation
             nodePort: 32222  # request this specific NodePort
         exposeType: NodePort # Service type
+      traits:
+        - type: env
+          properties:
+            env:
+              ENV_VAR: "production"
