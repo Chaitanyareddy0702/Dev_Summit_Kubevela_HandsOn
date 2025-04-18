@@ -7,16 +7,16 @@ spec:
     - name: my-web-component
       type: webservice  # Built-in component type
       properties:
-        image: nginx:latest
+        image: osrm/osrm-frontend
         ports: 
-          - port: 80
+          - port: 9966
             expose: true
       traits:
         - type: gateway  # Built-in trait
           properties:
             domain: my-app.local
             http:
-              "/": 80
+              "/": 9966
         - type: env      # Built-in trait for env vars (no ConfigMap needed!)
           properties:
             env:

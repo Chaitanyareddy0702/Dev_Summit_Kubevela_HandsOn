@@ -13,10 +13,10 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
+      - name: osrm-frontend
+        image: osrm/osrm-frontend
         ports:
-        - containerPort: 80
+        - containerPort: 9966
         envFrom:
         - configMapRef:
             name: my-config
