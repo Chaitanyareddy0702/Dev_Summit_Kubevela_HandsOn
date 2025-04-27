@@ -9,7 +9,6 @@ spec:
     - name: emailservice
       type: webservice
       properties:
-        serviceAccountName: emailservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.2
         ports:
           - port: 8080
@@ -19,6 +18,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: emailservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -32,7 +35,6 @@ spec:
     - name: checkoutservice
       type: webservice
       properties:
-        serviceAccountName: checkoutservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.2
         ports:
           - port: 5050
@@ -52,6 +54,10 @@ spec:
           - name: CART_SERVICE_ADDR
             value: "cartservice:7070"
       traits:
+        - type: service-account
+          properties:
+            name: checkoutservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -65,7 +71,6 @@ spec:
     - name: recommendationservice
       type: webservice
       properties:
-        serviceAccountName: recommendationservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.2
         ports:
           - port: 8080
@@ -77,6 +82,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: recommendationservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -90,7 +99,6 @@ spec:
     - name: frontend
       type: webservice
       properties:
-        serviceAccountName: frontend
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.2
         ports:
           - port: 8080
@@ -116,6 +124,10 @@ spec:
           - name: ENABLE_PROFILER
             value: "0"
       traits:
+        - type: service-account
+          properties:
+            name: frontend
+            create: true
         - type: resource
           properties:
             requests:
@@ -129,7 +141,6 @@ spec:
     - name: paymentservice
       type: webservice
       properties:
-        serviceAccountName: paymentservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.2
         ports:
           - port: 50051
@@ -139,6 +150,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: paymentservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -152,7 +167,6 @@ spec:
     - name: productcatalogservice
       type: webservice
       properties:
-        serviceAccountName: productcatalogservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.2
         ports:
           - port: 3550
@@ -162,6 +176,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: productcatalogservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -175,7 +193,6 @@ spec:
     - name: cartservice
       type: webservice
       properties:
-        serviceAccountName: cartservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.2
         ports:
           - port: 7070
@@ -183,6 +200,10 @@ spec:
           - name: REDIS_ADDR
             value: "redis-cart:6379"
       traits:
+        - type: service-account
+          properties:
+            name: cartservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -213,9 +234,12 @@ spec:
     - name: loadgenerator
       type: webservice
       properties:
-        serviceAccountName: loadgenerator
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator:v0.10.2
-      traits:            
+      traits:
+        - type: service-account
+          properties:
+            name: loadgenerator
+            create: true
         - type: resource
           properties:
             requests:
@@ -229,7 +253,6 @@ spec:
     - name: currencyservice
       type: webservice
       properties:
-        serviceAccountName: currencyservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.2
         ports:
           - port: 7000
@@ -239,6 +262,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: currencyservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -252,7 +279,6 @@ spec:
     - name: shippingservice
       type: webservice
       properties:
-        serviceAccountName: shippingservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.2
         ports:
           - port: 50051
@@ -262,6 +288,10 @@ spec:
           - name: DISABLE_PROFILER
             value: "1"
       traits:
+        - type: service-account
+          properties:
+            name: shippingservice
+            create: true
         - type: resource
           properties:
             requests:
@@ -275,7 +305,6 @@ spec:
     - name: adservice
       type: webservice
       properties:
-        serviceAccountName: adservice
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.2
         ports:
           - port: 9555
@@ -283,6 +312,10 @@ spec:
           - name: PORT
             value: "9555"
       traits:
+        - type: service-account
+          properties:
+            name: adservice
+            create: true
         - type: resource
           properties:
             requests:
