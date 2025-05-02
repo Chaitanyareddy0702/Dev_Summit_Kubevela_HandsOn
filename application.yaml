@@ -1,0 +1,360 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: microservices-demo
+spec:
+  components:
+
+    # Email Service
+    - name: emailservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.2
+        ports:
+          - port: 5000
+            name: grpc
+            expose: true
+            targetPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: emailservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Checkout Service
+    - name: checkoutservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.2
+        ports:
+          - port: 5050
+            name: grpc
+            expose: true
+            targetPort: 5050
+        env:
+          - name: PORT
+            value: "5050"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalogservice:3550"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "shippingservice:50051"
+          - name: PAYMENT_SERVICE_ADDR
+            value: "paymentservice:50051"
+          - name: EMAIL_SERVICE_ADDR
+            value: "emailservice:5000"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "currencyservice:7000"
+          - name: CART_SERVICE_ADDR
+            value: "cartservice:7070"
+      traits:
+        - type: service-account
+          properties:
+            name: checkoutservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Recommendation Service
+    - name: recommendationservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.2
+        ports:
+          - port: 8080
+            name: grpc
+            expose: true
+            targetPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalogservice:3550"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: recommendationservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "220Mi"
+            limits:
+              cpu: "200m"
+              memory: "450Mi"
+
+    # Frontend
+    - name: frontend
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.2
+        exposeType: LoadBalancer
+        ports:
+          - port: 80
+            name: frontend
+            expose: true
+            containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalogservice:3550"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "currencyservice:7000"
+          - name: CART_SERVICE_ADDR
+            value: "cartservice:7070"
+          - name: RECOMMENDATION_SERVICE_ADDR
+            value: "recommendationservice:8080"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "shippingservice:50051"
+          - name: CHECKOUT_SERVICE_ADDR
+            value: "checkoutservice:5050"
+          - name: AD_SERVICE_ADDR
+            value: "adservice:9555"
+          - name: SHOPPING_ASSISTANT_SERVICE_ADDR
+            value: "shoppingassistantservice:80"
+          - name: ENABLE_PROFILER
+            value: "0"
+      traits:
+        - type: service-account
+          properties:
+            name: frontend
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+    
+    # Payment Service
+    - name: paymentservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.2
+        ports:
+          - port: 50051
+            name: grpc
+            expose: true
+            targetPort: 50051
+        env:
+          - name: PORT
+            value: "50051"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: paymentservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Product Catalog Service
+    - name: productcatalogservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.2
+        ports:
+          - port: 3550
+            name: grpc
+            expose: true
+            targetPort: 3550
+        env:
+          - name: PORT
+            value: "3550"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: productcatalogservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Cart Service
+    - name: cartservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.2
+        ports:
+          - port: 7070
+            name: grpc
+            expose: true
+            targetPort: 7070
+        env:
+          - name: REDIS_ADDR
+            value: "redis-cart:6379"
+      traits:
+        - type: service-account
+          properties:
+            name: cartservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "200m"
+              memory: "64Mi"
+            limits:
+              cpu: "300m"
+              memory: "128Mi"
+
+    # Redis (as a long-running Cache)
+    - name: redis-cart
+      type: webservice
+      properties:
+        image: redis:alpine
+        ports:
+          - port: 6379
+            name: tcp-redis
+            expose: true
+            targetPort: 6379
+      traits:
+        - type: resource
+          properties:
+            requests:
+              cpu: "70m"
+              memory: "200Mi"
+            limits:
+              cpu: "125m"
+              memory: "256Mi"
+
+    # Load Generator
+    - name: loadgenerator
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator:v0.10.2
+      traits:
+        - type: service-account
+          properties:
+            name: loadgenerator
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+    # Currency Service
+    - name: currencyservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.2
+        ports:
+          - port: 7000
+            name: grpc
+            expose: true
+            targetPort: 7000
+        env:
+          - name: PORT
+            value: "7000"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: currencyservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Shipping Service
+    - name: shippingservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.2
+        ports:
+          - port: 50051
+            name: grpc
+            expose: true
+            targetPort: 50051
+        env:
+          - name: PORT
+            value: "50051"
+          - name: DISABLE_PROFILER
+            value: "1"
+      traits:
+        - type: service-account
+          properties:
+            name: shippingservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+    # Ad Service
+    - name: adservice
+      type: webservice
+      properties:
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.2
+        ports:
+          - port: 9555
+            name: grpc
+            expose: true
+            targetPort: 9555
+        env:
+          - name: PORT
+            value: "9555"
+      traits:
+        - type: service-account
+          properties:
+            name: adservice
+            create: true
+        - type: resource
+          properties:
+            requests:
+              cpu: "200m"
+              memory: "180Mi"
+            limits:
+              cpu: "300m"
+              memory: "300Mi"
