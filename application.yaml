@@ -11,7 +11,10 @@ spec:
       properties:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.2
         ports:
-          - port: 8080
+          - port: 5000
+            name: grpc
+            expose: true
+            targetPort: 8080
         env:
           - name: PORT
             value: "8080"
@@ -38,6 +41,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.2
         ports:
           - port: 5050
+            name: grpc
+            expose: true
+            targetPort: 5050
         env:
           - name: PORT
             value: "5050"
@@ -74,6 +80,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.2
         ports:
           - port: 8080
+            name: grpc
+            expose: true
+            targetPort: 8080
         env:
           - name: PORT
             value: "8080"
@@ -100,8 +109,12 @@ spec:
       type: webservice
       properties:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.2
+        exposeType: LoadBalancer
         ports:
-          - port: 8080
+          - port: 80
+            name: frontend
+            expose: true
+            containerPort: 8080
         env:
           - name: PORT
             value: "8080"
@@ -136,7 +149,7 @@ spec:
             limits:
               cpu: "200m"
               memory: "128Mi"
-
+    
     # Payment Service
     - name: paymentservice
       type: webservice
@@ -144,6 +157,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.2
         ports:
           - port: 50051
+            name: grpc
+            expose: true
+            targetPort: 50051
         env:
           - name: PORT
             value: "50051"
@@ -170,6 +186,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.2
         ports:
           - port: 3550
+            name: grpc
+            expose: true
+            targetPort: 3550
         env:
           - name: PORT
             value: "3550"
@@ -196,6 +215,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.2
         ports:
           - port: 7070
+            name: grpc
+            expose: true
+            targetPort: 7070
         env:
           - name: REDIS_ADDR
             value: "redis-cart:6379"
@@ -220,6 +242,9 @@ spec:
         image: redis:alpine
         ports:
           - port: 6379
+            name: tcp-redis
+            expose: true
+            targetPort: 6379
       traits:
         - type: resource
           properties:
@@ -256,6 +281,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.2
         ports:
           - port: 7000
+            name: grpc
+            expose: true
+            targetPort: 7000
         env:
           - name: PORT
             value: "7000"
@@ -282,6 +310,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.2
         ports:
           - port: 50051
+            name: grpc
+            expose: true
+            targetPort: 50051
         env:
           - name: PORT
             value: "50051"
@@ -308,6 +339,9 @@ spec:
         image: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.2
         ports:
           - port: 9555
+            name: grpc
+            expose: true
+            targetPort: 9555
         env:
           - name: PORT
             value: "9555"
