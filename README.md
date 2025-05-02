@@ -44,22 +44,18 @@ Or use killercoda's in-browser IDE to explore the directories
 
 ### Step 4: install micro-services
 
-    kubectl apply -f redis-cart/*
-    kubectl apply -f cartservice/*
-    kubectl apply -f productcatalog
-    shipping
-    currency
-    ad
-    reccomendation
-    payment
-    email
-    checkout
-    frontend
-    loadgenerator
-
-### Step 5: Uninstall all services
-
-    kubectl delete -f all.yaml
+    kubectl apply -f k8s-manifests/redis-cart/*
+    kubectl apply -f k8s-manifests/cartservice/*
+    kubectl apply -f k8s-manifests/productcatalogservice/*
+    kubectl apply -f k8s-manifests/shippingservice/*
+    kubectl apply -f k8s-manifests/currencyservice/*
+    kubectl apply -f k8s-manifests/adservice/*
+    kubectl apply -f k8s-manifests/recommendationservice/*
+    kubectl apply -f k8s-manifests/paymentservice/*
+    kubectl apply -f k8s-manifests/emailservice/*
+    kubectl apply -f k8s-manifests/checkoutservice/*
+    kubectl apply -f k8s-manifests/frontend/*
+    kubectl apply -f k8s-manifests/loadgenerator/*
 
 ### Step 5: Explore kubernetes objects
 
@@ -67,7 +63,11 @@ Or use killercoda's in-browser IDE to explore the directories
     get svc
     get deployments
 
-### Step 6: Install KubeVela controller
+### Step 6: Uninstall all services
+
+    kubectl delete -f k8s-manifests/all.yaml
+
+### Step 7: Install KubeVela controller
 
     vela install
 
@@ -75,7 +75,7 @@ verify the KubeVela controller is up
 
     kubectl get pod -n vela-system
 
-### Step 7: Explore KubeVela components
+### Step 8: Explore KubeVela components
 
 Show all components
 
@@ -85,7 +85,7 @@ explore addons
 
     vela addon
 
-### Step 8: Install Same services using KubeVela
+### Step 9: Install Same services using KubeVela
 
     vela up application.yaml
 
@@ -96,7 +96,7 @@ check application status
 Understand application.yaml
 
 
-### Step 9: Explore Vela UX
+### Step 10: Explore Vela UX
 
 Enable Vela UX addon
 
