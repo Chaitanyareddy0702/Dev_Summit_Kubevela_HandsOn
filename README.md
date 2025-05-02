@@ -97,3 +97,18 @@ Understand application.yaml
 
 
 ### Step 9: Explore Vela UX
+
+Enable Vela UX addon
+
+    vela addon enable velaux
+
+Port forward the VelUX port
+
+    kubectl apply -f vela-ux/velaux-service.yaml
+
+Configure KillerCoda to access the port externally
+
+- Click on Traffic/Ports in Killercoda.
+- In the Custom Ports section, enter the NodePort number of the service you created (31313).
+- Click on Access to open the VelaUX.
+- When prompted enter following credentials to login `Username: admin` `Password: VelaUX12345`
