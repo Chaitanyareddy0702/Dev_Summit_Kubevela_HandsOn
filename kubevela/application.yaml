@@ -4,7 +4,6 @@ metadata:
   name: microservices-demo
 spec:
   components:
-
     # Email Service
     - name: emailservice
       type: webservice
@@ -149,7 +148,7 @@ spec:
             limits:
               cpu: "200m"
               memory: "128Mi"
-    
+
     # Payment Service
     - name: paymentservice
       type: webservice

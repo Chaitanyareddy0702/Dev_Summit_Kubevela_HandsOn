@@ -19,7 +19,7 @@ Step 2: Install KubeVela cli
 
 verify vela cli is installed
 
-    vela --version
+    vela version
 
 ### Step 2: Clone the hands-on repository
 
@@ -34,7 +34,7 @@ Each directory contains the k8s manifest for each microservice.
 
 Instructor will explain the contents of repo.
 
-    cd frontend
+    cd k8s-manifests/frontend
     ls -l
     cat deployment.yaml
     cat service.yaml
@@ -44,18 +44,30 @@ Or use killercoda's in-browser IDE to explore the directories
 
 ### Step 4: install micro-services
 
-    kubectl apply -f k8s-manifests/redis-cart/*
-    kubectl apply -f k8s-manifests/cartservice/*
-    kubectl apply -f k8s-manifests/productcatalogservice/*
-    kubectl apply -f k8s-manifests/shippingservice/*
-    kubectl apply -f k8s-manifests/currencyservice/*
-    kubectl apply -f k8s-manifests/adservice/*
-    kubectl apply -f k8s-manifests/recommendationservice/*
-    kubectl apply -f k8s-manifests/paymentservice/*
-    kubectl apply -f k8s-manifests/emailservice/*
-    kubectl apply -f k8s-manifests/checkoutservice/*
-    kubectl apply -f k8s-manifests/frontend/*
-    kubectl apply -f k8s-manifests/loadgenerator/*
+    kubectl apply -f k8s-manifests/redis-cart
+
+check the pod and services are up
+
+    kubectl get pod
+    kubectl get svc
+
+Install rest of the services
+
+    kubectl apply -f k8s-manifests/cartservice
+    kubectl apply -f k8s-manifests/productcatalogservice
+    kubectl apply -f k8s-manifests/shippingservice
+    kubectl apply -f k8s-manifests/currencyservice
+    kubectl apply -f k8s-manifests/adservice
+    kubectl apply -f k8s-manifests/recommendationservice
+    kubectl apply -f k8s-manifests/paymentservice
+    kubectl apply -f k8s-manifests/emailservice
+    kubectl apply -f k8s-manifests/checkoutservice
+    kubectl apply -f k8s-manifests/frontend
+    kubectl apply -f k8s-manifests/loadgenerator
+
+Watch pods
+
+    kubectl get po -w
 
 ### Step 5: Explore kubernetes objects
 
@@ -63,9 +75,19 @@ Or use killercoda's in-browser IDE to explore the directories
     get svc
     get deployments
 
+### Step 6: Access the service
+
+Use Killercoda's "Traffic/port" functionality to access the Boutique app.
+
+-  Click on 3-dots on the top right corner
+-  Find the port number of the frontend loadbalancer service `k get svc frontend`, look for "PORT(S)" column. Where you should see something like `80:31088/TCP`. In this case `31088` is the port number which wil be used later in the steps below.
+-  Find the option "Traffic/Port" and click on it
+-  This will redirect to an new webpage, where you will have to enter the port number of the service "frontend external" which we determined in above step. (31088 in above the illustration)
+-  This should open a new page rendering the Boutique app.
+
 ### Step 6: Uninstall all services
 
-    kubectl delete -f k8s-manifests/all.yaml
+    k delete -f k8s-manifests/ -R
 
 ### Step 7: Install KubeVela controller
 
@@ -77,23 +99,31 @@ verify the KubeVela controller is up
 
 ### Step 8: Explore KubeVela components
 
-Show all components
+Show all commands
 
-    vela def show
+    vela -h
 
 explore addons
 
-    vela addon
+    vela addon list
+
+explore components/traits and other defs
+
+    vela def list
 
 ### Step 9: Install Same services using KubeVela
 
-    vela up application.yaml
+    kubectl apply -f kubevela/application.yaml
 
 check application status
 
-    vela status <application-name>
+    vela status microservices-demo
 
-Understand application.yaml
+#### Understand application.yaml
+
+Understand in detail what is component, trait, policy, workflow etc.
+
+Understand which component and traits are used in current application.
 
 
 ### Step 10: Explore Vela UX
