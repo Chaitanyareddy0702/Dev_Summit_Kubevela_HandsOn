@@ -72,8 +72,8 @@ Watch pods
 ### Step 5: Explore kubernetes objects
 
     kubectl get pod
-    get svc
-    get deployments
+    kubectl get svc
+    kubectl get deployments
 
 ### Step 6: Access the service
 
@@ -87,7 +87,7 @@ Use Killercoda's "Traffic/port" functionality to access the Boutique app.
 
 ### Step 6: Uninstall all services
 
-    k delete -f k8s-manifests/ -R
+    kubectl delete -f k8s-manifests/ -R
 
 ### Step 7: Install KubeVela controller
 
@@ -113,7 +113,7 @@ explore components/traits and other defs
 
 ### Step 9: Install Same services using KubeVela
 
-    kubectl apply -f kubevela/application.yaml
+    vela up -f kubevela/application.yaml
 
 check application status
 
