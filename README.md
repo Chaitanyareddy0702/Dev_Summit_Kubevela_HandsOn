@@ -5,7 +5,9 @@ This repository is created for hands-on session on KubeVela exercise for Guidewi
 ## Prerequisite
 
 - Sign-up to [Killercoda](https://killercoda.com/)
-- Create a Kubernetes playground in Killercoda
+- Go to Playgrounds by clicking on the "Playgrounds" tile.
+- Open the "Kubernetes 1.32" playground by clicking on the "Kubernetes 1.32" tile.
+- This should open the Kubernetes playground environment in Killercoda
 
 ### Step 1: Verify the setup
 
