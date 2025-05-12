@@ -39,6 +39,7 @@ Instructor will explain the contents of repo.
     cat deployment.yaml
     cat service.yaml
     cat serviceaccount.yaml
+    cd ../..
 
 Or use killercoda's in-browser IDE to explore the directories
 
@@ -80,7 +81,7 @@ Watch pods
 Use Killercoda's "Traffic/port" functionality to access the Boutique app.
 
 -  Click on 3-dots on the top right corner
--  Find the port number of the frontend loadbalancer service `k get svc frontend`, look for "PORT(S)" column. Where you should see something like `80:31088/TCP`. In this case `31088` is the port number which wil be used later in the steps below.
+-  Find the port number of the frontend loadbalancer service `k get svc frontend-external`, look for "PORT(S)" column. Where you should see something like `80:31088/TCP`. In this case `31088` is the port number which wil be used later in the steps below.
 -  Find the option "Traffic/Port" and click on it
 -  This will redirect to an new webpage, where you will have to enter the port number of the service "frontend external" which we determined in above step. (31088 in above the illustration)
 -  This should open a new page rendering the Boutique app.
