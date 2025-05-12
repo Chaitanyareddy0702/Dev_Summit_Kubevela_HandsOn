@@ -122,7 +122,7 @@ check application status
 
     vela status microservices-demo
 
--Access the service by following these steps
+Access the service by following these steps
 - Click on the "Menu" icon on the top right corner
 - Find the port number of the frontend loadbalancer service `k get svc frontend`, look for "PORT(S)" column. Where you should see something like `80:31088/TCP`. In this case `31088` is the port number which wil be used later in the steps below.
 - Find the option "Traffic/Port" and click on it
