@@ -41,7 +41,7 @@ Instructor will explain the contents of repo.
     cat serviceaccount.yaml
     cd ../..
 
-Or use killercoda's in-browser IDE to explore the directories
+Or **use killercoda's in-browser IDE to explore the directories**
 
 ### Step 4: install micro-services
 
